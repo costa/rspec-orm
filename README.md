@@ -18,7 +18,7 @@ Other than that, this is an attempt to make code like below work
           post :price_change :category => 'food', :by => '+10%'
           response.should be_success
     
-          Drink.constinsts.each { |d| d.should be_the_same }
+          Drink.constinsts.each_value { |d| d.should be_the_same }
           Food.Bun.should be_the_same_but :price => 2.20
         end
     
@@ -26,3 +26,5 @@ Other than that, this is an attempt to make code like below work
           # TODO resetting the database?
         end
     end
+
+Note that you will need constinsts and csv_send from http://github.com/costa/dev/tree/master/ruby/ to try this code -- I am still thinking of how to package that code since I don't want it to be a part of this gem-to-be.
