@@ -1,5 +1,5 @@
 # new-save-reload protocol expected from the wrapped class (both AR & DM)
-class PenetratingOrmWrapper  # FIXME? suggest a better silly name, what? :-)
+class IntenseOrmWrapper  # FIXME? suggest a better silly name, what? :-)
 
   attr_reader :saved_attrs, :wrapped
 

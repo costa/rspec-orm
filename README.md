@@ -1,8 +1,10 @@
 
-*CAUTION*: concept-quality code, that is, _anything_ may change!
+*WARNING*: concept-quality code, that is, _anything_ may change!
 
-Other than that, this is an attempt to make code like below work
+Other than that, this is an attempt to make code like below work:
 
+    require 'spec/rails/ar'
+    
     describe BarController do
       context "having some items" do
         before do
@@ -27,4 +29,8 @@ Other than that, this is an attempt to make code like below work
         end
     end
 
-Note that you will need constinsts and csv_send from http://github.com/costa/dev/tree/master/ruby/ to try this code -- I am still thinking of how to package that code since I don't want it to be a part of this gem-to-be.
+- which roughly does in already.
+
+Note that you will need xgem from http://github.com/costa/xgem and
+    export RUBYLIB="<a path to its ./lib>:$RUBYLIB"
+until the gem is developed, packaged and distributed.
