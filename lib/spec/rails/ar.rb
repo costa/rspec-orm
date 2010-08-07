@@ -1,27 +1,18 @@
 require 'rubygems'
-require 'xgem'
 
 require 'active_record'
 
-require 'x/constinsts'
-require 'x/csv_send'
+require 'spec/orm'
 
-require 'x/intense_orm_wrapper'
 
-require 'spec/wrapped_orm_matchers'
-
+ObjectSpace.each_object(Class) { |k|
+  Spec::Orm.wrap k if k.superclass == ActiveRecord::Base }
 
 class ActiveRecord::Base
   class << self
-
     alias :inherited_b4_rspec_ar :inherited
     def inherited(sub)
-      def sub.constinst_new(attrs)
-        IntenseOrmWrapper.new self, attrs
-      end
-
-      sub.class_eval { include Constinsts }
-
+      Spec::Orm.wrap sub
       inherited_b4_rspec_ar sub
     end
   end
