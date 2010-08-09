@@ -2,8 +2,6 @@ require 'xgem'
 
 require 'x/to_t'
 
-require 'csv_send'
-
 
 describe CsvReceiver do
 

@@ -1,11 +1,10 @@
 require 'xgem'
 
+require 'x/recurse'
 require 'x/constinsts'
-require 'x/csv_send'
+require 'x/csv_send'  # a utility require
 
 require 'x/intense_orm_wrapper'
-
-require 'spec/wrapped_orm_matchers'
 
 
 module Spec::Orm
@@ -14,14 +13,12 @@ module Spec::Orm
       klass.class_eval do
         include Constinsts
 
-        def self.constinst_new(attrs)
-          IntenseOrmWrapper.new self, attrs
+        # FIXME? the side effect is changing the attrs
+        def self.constinst_new(*attrs)
+          IntenseOrmWrapper.new self, *attrs.recurse!{ |e|
+            if e.is_a? IntenseOrmWrapper then e.wrapped else e end }
         end
       end
     end
   end
-end
-
-Spec::Runner.configure do |config|
-  config.include(WrappedOrmMatchers, :type => [:controller])
 end

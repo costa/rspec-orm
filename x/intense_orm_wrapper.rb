@@ -1,4 +1,10 @@
+require 'xgem'
+
+require 'x/string_cut'
+
 # new-save-reload protocol expected from the wrapped class (both AR & DM)
+# FIXME -attributise too!
+# FIXME what about specs?
 class IntenseOrmWrapper  # FIXME? suggest a better silly name, what? :-)
 
   attr_reader :saved_attrs, :wrapped
@@ -6,7 +12,7 @@ class IntenseOrmWrapper  # FIXME? suggest a better silly name, what? :-)
   def initialize(wrapped_klass, new_attrs)
     @wrapped = wrapped_klass.new new_attrs
     @wrapped.save
-    @saved_attrs = new_attrs.clone
+    @saved_attrs = @wrapped.attributise(new_attrs)
   end
 
   # FIXME special case until 1.9 I think
@@ -15,10 +21,10 @@ class IntenseOrmWrapper  # FIXME? suggest a better silly name, what? :-)
   end
 
   def method_missing(m, *a, &b)
-    if m.to_s[-1..-1] == '='
+    attr, eq = m.to_s.cut(-1)
+    if eq == '='
       res = @wrapped.send m, *a, &b
       @wrapped.save
-      attr = m.to_s[0...-1]
       @saved_attrs[attr] = res if @saved_attrs.include? attr
       res
     else

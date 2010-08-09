@@ -1,6 +1,3 @@
-
-require 'constinsts'
-
 describe Constinsts do
 
   class A
